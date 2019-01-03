@@ -1,0 +1,75 @@
+#include<iostream>
+#include<string>
+using namespace std;
+struct Queue {
+	int data[10000];
+	int begin, end;
+
+	Queue() {
+		begin = 0;
+		end = 0;
+	}
+
+	void push(int num) {
+		data[end]=num;
+		end++;
+	}
+	bool empty() {
+		if (end - begin == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	int size() {
+		return end - begin;
+	}
+	int front() {
+		return data[begin];
+	}
+	int back() {
+		return data[end - 1];
+	}
+	int pop() {
+		if (empty()) {
+			return -1;
+		}
+		else {
+			begin++;
+			return data[begin - 1];
+		}
+	}
+};
+int main() {
+	Queue q;
+
+	while (1) {
+		int n;
+		cout << "1. push 2. fromt 3. back 4. empty 5. pop 6. size" << "\n";
+		cin >> n;
+		if (n == 1) {
+			int num;
+			cin >> num;
+			q.push(num);
+		}
+		if (n == 2) {
+			cout<<q.front()<<"\n";
+		}
+		if (n == 3) {
+			cout << q.back() << "\n";
+		}
+		if (n == 4) {
+			cout << q.empty() << "\n";
+		}
+		if (n == 5) {
+			q.pop();
+		}
+
+		if (n == 6) {
+			cout << q.size() << "\n";
+		}
+		
+	}
+	return 0;
+}
