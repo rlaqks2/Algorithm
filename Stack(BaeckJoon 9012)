@@ -1,0 +1,74 @@
+#include<iostream>
+#include<string.h>
+#include<stack>
+using namespace std;
+struct Stack {
+	char data[10000];
+	int size;
+
+	Stack() {
+		size = 0;
+	}
+	bool empty() {
+		if (size == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	char top() {
+		if (empty()) {
+			return -1;
+		}
+		else {
+			return data[size - 1];
+		}
+	}
+	char pop() {
+		if (empty()) {
+			return -1;
+		}
+		else {
+			size--;
+			return data[size];
+		}
+	}
+	void push(char num) {
+		data[size] = num;
+		size++;
+	}
+
+};
+
+int main() {
+	int num;
+	cin >> num;
+	while (num>0) {
+		Stack s;
+		char c[1000];
+		cin >> c;
+		for(int i=0; i<strlen(c);i++)
+		if (c[i] == '(') {
+			s.push(c[i]);
+		}
+		else if (c[i] == ')') {
+			if (s.empty() == true) {
+				s.push(')');
+				break;
+			}
+			else {
+				s.pop();
+			}
+		}
+		if (s.empty() == true) {
+			cout << "YES";
+		}
+		else {
+			cout << "NO";
+		}
+		num--;
+	}
+	
+	return 0;
+}
