@@ -1,0 +1,71 @@
+#include<iostream>
+#include<string.h>
+#include<stack>
+using namespace std;
+struct Stack {
+	int data[10000];
+	int size;
+
+	Stack() {
+		size = 0;
+	}
+	bool empty() {
+		if (size == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	int top() {
+		if (empty()) {
+			return -1;
+		}
+		else {
+			return data[size - 1];
+		}
+	}
+	int pop() {
+		if (empty()) {
+			return -1;
+		}
+		else {
+			size--;
+			return data[size];
+		}
+	}
+	void push(int num) {
+		data[size] = num;
+		size++;
+	}
+	
+};
+
+int main() {
+	Stack s;
+
+	while (1) {
+		int compare;
+		cout << "1. push 2. pop 3. top 4. size 5. empty \n";
+		cin >> compare;
+		if (compare == 1) {
+			int num;
+			cin >> num;
+			s.push(num);
+		}
+		else if (compare == 2) {
+			cout<<s.pop() << "\n";
+		}
+		else if (compare == 3) {
+			cout << s.top() << "\n";
+		}
+		else if (compare == 4) {
+			cout << s.size << "\n";
+		}
+		else {
+			cout << s.empty() << "\n";
+		}
+		
+	}
+	return 0;
+}
