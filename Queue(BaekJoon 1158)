@@ -1,0 +1,31 @@
+#include<iostream>
+#include<queue>
+#include<string>
+using namespace std;
+
+int main() {
+	queue<int> q;
+	int n1, n2;
+
+	scanf("%d %d",&n1, &n2);
+	
+	for (int i = 1; i <= n1; i++) {
+		q.push(i);
+	}
+	printf("<");
+	for (int i = 0; i < n1-1; i++) {
+		for (int j = 0; j < n2; j++) {
+			if (j == n2-1) {
+				printf("%d, ", q.front());
+				q.pop();
+			}
+			else {
+				q.push(q.front());
+				q.pop(); 
+			}
+		}	
+	}
+	printf("%d>\n", q.front());
+
+	return 0;
+}
