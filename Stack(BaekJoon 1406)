@@ -1,0 +1,62 @@
+#include<iostream>
+#include <cstdio>
+#include <cstring>
+#include<string>
+#include<stack>
+using namespace std;
+
+int main() {
+	stack<char> stack, stack_temp;
+	
+	string s;
+	cin >> s;
+	int n;
+	cin >> n;
+
+	for (int i = 0; i < s.size(); i++) {
+		stack.push(s[i]);
+	}
+
+	
+	for (int i = 0; i < n; i++) {
+		char c;
+		cin >> c;
+
+		if (c == 'L') {
+			if (stack.empty() == false) {
+				char temp = stack.top();
+				stack_temp.push(temp);
+				stack.pop();
+			}
+		}
+		else if (c == 'D') {
+			if (stack_temp.empty() == false) {
+				char temp = stack_temp.top();
+				stack.push(temp);
+				stack_temp.pop();
+			}
+		}
+		else if (c == 'B') {
+			if (stack.empty() == false) {
+				stack.pop();
+			}
+		}
+		else if (c == 'P') {
+			char a;
+			scanf(" %c", &a);
+			stack.push(a);
+		}
+		
+	}
+	int num = stack.size();
+	for (int i = 0; i < num; i++) {
+		stack_temp.push(stack.top());
+		stack.pop();
+	}
+	num= stack_temp.size();
+	for (int i = 0; i < num; i++) {
+		cout << stack_temp.top();
+		stack_temp.pop();
+	}
+	return 0;
+}
