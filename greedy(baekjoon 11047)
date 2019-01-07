@@ -1,0 +1,23 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+int main() {
+	int n, k;//n=동전 종류, k=금액
+	cin >> n >> k;
+	vector<int> num;
+
+	for (int i = 0; i < n; i++) {
+		int temp;
+		cin >> temp;
+		num.push_back(temp);
+	}
+	
+	int ans = 0;
+	for (int i = n - 1; i >= 0; i--) {
+		ans = ans + k/num[i];
+		k = k - k / num[i] * num[i];
+	}
+	cout << ans << "\n";
+	return 0;
+}
