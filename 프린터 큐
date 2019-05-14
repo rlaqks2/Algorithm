@@ -1,0 +1,67 @@
+#include<iostream>
+#include<cstdio>
+#include<vector>
+#include<queue>
+#include<cstring>
+#include<algorithm>
+using namespace std;
+#define max 100
+int main() {
+	queue<int> result;
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		int N, M;
+
+		cin >> N >> M;
+		if (N > max) {
+			cout << "Exceeded the number of documents ";
+			exit(0);
+		}
+		if (0 > M || M > N) {
+			cout << "M Error";
+			exit(0);
+		}
+
+		vector<int> v;//sort
+		queue<pair<int, bool>> rank;
+		for (int j = 0; j < N; j++) {
+			int temp;
+			cin >> temp;
+			v.push_back(temp);
+			if (j == M) {
+				rank.push({ temp,true });
+			}
+			else {
+				rank.push({ temp,false });
+			}
+		}//중요도 array에 저장
+		sort(v.begin(), v.end());
+		int count=0;
+		while (!v.empty()) {
+			if (v.back() == rank.front().first){//sort한 가장 큰 수와 기존의 것과 비교
+				if (rank.front().second == true) {
+					count++;
+					break;
+				}
+				else {//만약 같은데 false이면 count++하고 가장 큰수 날린다.
+					rank.pop();
+					v.pop_back();
+					count++;
+				}
+			}
+			else {//가장 큰 수가 앞으로 올때 까지 계속 push, pop
+				rank.push({ rank.front().first,rank.front().second });
+				rank.pop();
+			}
+		}
+		//rank queue weight, 순서
+		
+		result.push(count);
+	}
+	for (int i = 0; i < n;i++) {
+		cout << result.front()<<"\n";
+		result.pop();
+	}
+	return 0;
+}
