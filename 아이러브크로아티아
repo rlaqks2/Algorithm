@@ -1,0 +1,54 @@
+#include<iostream>
+#include<queue>
+#include<algorithm>
+using namespace std;
+int main() {
+	queue<pair<int, char>> check;
+	queue<int> q;
+	for (int i = 1; i <= 8; i++) {// 사람 미리 저장
+		q.push(i);
+	}
+	int k,n;
+	cin >> k;//사람 수
+	if (0 >= k || k > 8) {
+		cout << "Person number error!";
+		exit(0);
+	}
+	for (int i = 1; i < k; i++) {//front에 k사람 번호 맞춰두기
+		int temp = q.front();
+		q.pop();
+		q.push(temp);
+	}
+	cin >> n;// 문제 수
+	if (0 > n || n > 100) {
+		cout << "Promblem number error!";
+		exit(0);
+	}
+	int time_check = 210;
+	for (int i = 0; i < n; i++) {//문제 수 만큼 loop 문제와 시간 입력
+		char problem_check;
+		int delay;
+		cin >> delay >> problem_check;
+		check.push({ delay,problem_check });
+	}
+
+	while (time_check > 0) {
+		int time = check.front().first;
+		time_check -= time;
+
+		if (time_check <= 0) {
+			cout << q.front();
+			break;
+		}
+		else {
+			if (check.front().second == 'T') {//T일 경우만 다음사람
+				int q_temp = q.front();
+				q.pop();
+				q.push(q_temp);
+			}
+		}
+		check.pop();
+	}
+
+	return 0;
+}
