@@ -1,0 +1,68 @@
+#include<algorithm>
+#include<queue>
+#include<iostream>
+using namespace std;
+#define max 101
+char a[max][max];//정상
+int check[max][max];//check
+int X[] = { 0,0,-1,1 };
+int Y[] = { -1,1,0,0 };//상하 좌우 data 같은 것 있는거 확인하는데 사용하는 array
+void bfs(int, int, char);
+int main() {
+	int n, result = 0;
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> a[i][j];
+		}
+	}//rgb input
+	for (int k = 0; k < 2; k++) {//0일 경우, 정상 그리고 1일 경우, 적록색약
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (check[i][j] == 0 && k == 0) {//rgb데이터 확인 안했을 경우
+					bfs(i, j, a[i][j]);
+					check[i][j] = 1;
+					result++;
+				}
+				if (check[i][j] == 0 && k == 1) {
+					bfs(i, j, a[i][j]);
+					check[i][j] = 1;
+					result++;
+				}
+			}
+		}
+		cout << result << " ";
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (a[i][j] == 'G')
+					a[i][j] = 'R';
+				check[i][j] = 0;
+			}
+		}
+		result = 0;
+	}
+
+	return 0;
+}
+void bfs(int x, int y, char data) {
+	queue<pair<int, int>> q;
+	q.push({ x,y });//해당 위치 queue에 저장
+	while (!q.empty()) {
+		int x_data = q.front().first;
+		int y_data = q.front().second;
+
+		for (int i = 0; i < 4; i++) {//주변 유사 data있으면 q에 저장
+			int x_data = q.front().first + X[i];
+			int y_data = q.front().second + Y[i];
+
+			if (a[x_data][y_data] == data && check[x_data][y_data] == 0) {//정상, 주변이 data와 값이 같으면 확인
+				q.push({ x_data ,y_data });
+				check[x_data][y_data] = 1;//사용 되었으면 1로 변환
+			}
+
+		}
+		q.pop();
+	}
+
+}
