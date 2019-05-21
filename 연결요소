@@ -1,0 +1,54 @@
+#include<iostream>
+#include<cstdio>
+#include<vector>
+#include<queue>
+#include<cstring>
+#include<algorithm>
+#define max 1001
+using namespace std;
+bool visit[max];
+vector<int> vec[max];
+queue<int> q;
+
+void BFS(int);
+int main() {
+	int n,m;
+	cin >> n >> m;
+	if (n > 1000) {
+		cout << "Dot overflow!";
+	}
+
+	for (int i = 0; i < m; i++) {
+		int u, v;
+		cin >> u >> v; 
+		vec[u].push_back(v);
+		vec[v].push_back(u);
+	}
+	int result = 0;
+	for (int i = 1; i <= n; i++) {
+		if (visit[i] != true) {
+			BFS(i);//bfs로 연결 요소 확인
+			result++;
+		}
+	}
+	cout << result;
+	
+	
+	return 0;
+}
+
+void BFS(int s) {
+	visit[s] = true;
+	q.push(s);
+	while (!q.empty()) {
+		int x = q.front();
+		
+		q.pop();
+			for (int i : vec[x]) {//정점의 넓이 탐색
+			if (!visit[i]) {//방문하지 않은 곳
+				q.push(i);
+				visit[i] = true;
+			}
+		}
+	}
+}
