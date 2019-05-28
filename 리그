@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+#define max 101
+
+int main() {
+	int n;
+	int team[max][max];
+	int play;
+	cin >> n;//team 수
+	play = (n*(n - 1)) / 2;//for문 횟수
+	for (int i = 0; i < play; i++) {
+		int a, b, c, d;
+		cin >> a >> b >> c >> d;
+		if (c > d) {
+			team[a][b] = 3;
+			team[b][a] = 0;
+		}
+		else if (c < d) {
+			team[a][b] = 0;
+			team[b][a] = 3;
+		}
+		else {
+			team[a][b] = 1;
+			team[b][a] = 1;
+		}
+	}//array 저장 
+
+	vector<pair<int, int>> vec;
+	for (int i = 1; i <= n; i++){
+		int temp = 0;
+		for (int j = 1; j <= n; j++) {
+			if (i != j) {
+				temp = temp + team[i][j];
+			}
+			else{}
+		}
+		vec.push_back(pair<int,int>(temp, i));
+	}
+
+	sort(vec.begin(), vec.end());
+	int result[max];
+	int compare = 0;
+
+	result[vec.back().second] = 1;
+	int Temp;
+	for (int i = 1; i < n;i++) {
+		compare = vec.back().first;
+		vec.pop_back();
+		int tempp = vec.back().second;
+		if (compare != vec.back().first) {
+			Temp = i+1;
+			result[tempp] = Temp;
+		}
+		else { 
+			
+			result[tempp] = Temp; }
+
+	}
+	for (int i = 1; i <= n; i++) {
+		cout << result[i] << "\n";
+	}
+	return 0;
+}
+
