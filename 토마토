@@ -1,0 +1,63 @@
+#include <iostream>
+#include <queue>
+#include <algorithm>
+using namespace std;
+#define max 1001
+queue<pair<int, int>> q;
+int visit[max][max];
+int x[4] = { 0,0,-1,1 };
+int y[4] = { -1,1,0,0 };
+void bfs();
+int n, m;
+int main() {
+
+	cin >> m >> n;
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= m; j++) {
+			cin >> visit[j][i];
+			if (visit[j][i] == 1) {
+				q.push(make_pair(j, i));//x,y
+			}
+		}
+	}// input
+
+	bfs();
+
+	return 0;
+}
+void bfs() {
+
+	int result = 0;
+
+	while (!q.empty()) {
+		int size = q.size();
+		
+		for (int i = 0; i < size; i++) {
+			int front[2];
+			front[0] = q.front().first;
+			front[1] = q.front().second;
+			q.pop();
+			for (int j = 0; j < 4; j++) {
+				int x_data = front[0] + x[j];
+				int y_data = front[1] + y[j];
+				if (x_data<=0 || x_data>m || y_data<=0 || y_data>n) {//m,n 범위 안에없는 것 넘기기
+					continue;
+				}
+				if (visit[x_data][y_data] == 0) {
+					visit[x_data][y_data] = 1;
+					q.push(make_pair(x_data, y_data));
+				}
+			}
+		}
+		result++;	
+	}
+
+	for (int i = 1; i <= n; i++) {//visit에 1이 다 들어가 있는지 확인
+		for (int j = 1; j <= m; j++) {
+			if (visit[j][i] == 0) {
+				result = 0;
+			}
+		}
+	}
+	cout << result-1;
+}
