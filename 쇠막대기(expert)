@@ -1,0 +1,42 @@
+#include<iostream>
+#include<algorithm>
+#include<stack>
+using namespace std;
+#define max 100001
+int main() {
+	int n;
+	stack<char> s;
+	cin >> n;
+	char str[max];
+	int Result[max];
+	for (int i = 0; i < n; i++) {
+		cin >> str;
+		int result = 0;
+		int check = 0;
+		int j = 0;
+		while(str[j]=='('||str[j]==')') {
+			if (str[j] == '(') {
+				s.push('(');
+				check = 0;
+			}
+			else {
+				s.pop();
+				if (check == 0) {
+					check = 1;
+					result += s.size();
+				}
+				else {
+					result += 1;
+				}
+			}
+			j++;
+		}
+		Result[i] = result;
+	}
+	for (int i = 0; i < n; i++) {
+		cout << "#" << i + 1 << " " << Result[i] << "\n";
+	}
+
+
+	return 0;
+}
