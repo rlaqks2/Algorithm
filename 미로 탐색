@@ -1,0 +1,58 @@
+#include <iostream>
+#include <queue>
+
+
+#define max 101
+using namespace std;
+
+int row, col;
+int matrix[max][max];
+int visited[max][max];
+int dx[] = { 1,0,-1,0 };
+int dy[] = { 0,-1,0,1 };
+
+void bfs(int x, int y) {
+	queue<pair<int, int>> q;// bfs사용하기위해 queue
+	visited[x][y] = 1;
+
+	q.push(make_pair(x, y));//push
+
+	while (!q.empty()) {//vec 값이 비어있으면, 끝
+		int new_x = q.front().first;//pop 하기 전의 x값
+		int new_y = q.front().second;//pop 하기 전의 y값
+		q.pop();
+
+		for (int i = 0; i < 4; i++) {
+			//인접한 값 x,y 설정
+			int nx = new_x + dx[i];
+			int ny = new_y + dy[i];
+
+			if (matrix[nx][ny] == 1 && visited[nx][ny] == 0) {
+				visited[nx][ny] = visited[new_x][new_y] + 1;//최단거리 계산
+				q.push(make_pair(nx, ny));//push
+			}
+		}
+
+	}
+}
+
+
+
+int main() {
+
+	cin >> row >> col;
+
+
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			scanf("%1d", &matrix[i][j]);
+			visited[i][j] = 0;
+		}
+	}//input 
+	
+	bfs(0, 0);
+
+	cout << visited[row-1][col-1];
+		
+	return 0;
+}
