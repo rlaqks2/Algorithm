@@ -1,0 +1,77 @@
+#include <iostream>
+#include <queue>
+#include <algorithm>
+
+
+#define max 26
+using namespace std;
+
+int n;
+int matrix[max][max];
+bool visited[max][max];
+int dx[] = { 1,0,-1,0 };
+int dy[] = { 0,-1,0,1 };
+
+int bfs(int x, int y) {
+	queue<pair<int, int>> q;// bfs사용하기위해 queue
+	visited[x][y] = 1;
+	int count = 0;
+
+	q.push(make_pair(x, y));//push
+
+	while (!q.empty()) {//vec 값이 비어있으면, 끝
+		int new_x = q.front().first;//pop 하기 전의 x값
+		int new_y = q.front().second;//pop 하기 전의 y값
+		q.pop();
+
+		for (int i = 0; i < 4; i++) {
+			//인접한 값 x,y 설정
+			int nx = new_x + dx[i];
+			int ny = new_y + dy[i];
+
+			if (matrix[nx][ny] == 1 && visited[nx][ny] == false) {
+				visited[nx][ny] = true;//최단거리 계산
+				q.push(make_pair(nx, ny));//push
+				
+			}
+		}
+		count++;
+	}
+	return count;
+}
+
+
+
+int main() {
+
+	vector<int> result;
+
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			scanf("%1d", &matrix[i][j]);
+			visited[i][j] = 0;
+		}
+	}//input 
+	
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (matrix[i][j] == 1 && visited[i][j] == false) {
+				result.push_back(bfs(i, j));//push
+			}
+		}
+	}
+	
+	int size = result.size();
+	cout << size << endl;
+
+	sort(result.begin(), result.end());// sort
+
+	for (int i = 0; i < size; i++) {
+		cout << result.at(i) << endl;
+	}
+		
+
+	return 0;
+}
