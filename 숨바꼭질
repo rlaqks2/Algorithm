@@ -1,0 +1,58 @@
+#include <iostream>
+#include <queue>
+
+//#pragma warning (disable: 4996)
+
+#define max 200001
+
+int visited[max];
+using namespace std;
+
+int bfs(int n, int k) {
+	int result = 0;
+	queue<int> q;
+	q.push(n);
+	visited[n] = 0;
+
+	while (!q.empty()) {
+
+		int data = q.front();
+		q.pop();
+
+		// check
+		if (data == k) {
+			return visited[data];
+		}
+
+		// data - 1
+		if (data - 1 >= 0 && !visited[data - 1]) {
+			visited[data - 1] = visited[data] + 1;
+			q.push(data - 1);
+		}
+		// data + 1
+		if (data + 1 <= 100000 && !visited[data + 1]) {
+			visited[data + 1] = visited[data] + 1;
+			q.push(data + 1);
+		}
+		// data * 2
+		if (2 * data <= 100000 && !visited[2 * data]) {
+			visited[2 * data] = visited[data] + 1;
+			q.push(2 * data);
+		}
+
+	}
+}
+
+
+int main() {
+
+	int n, k;
+	int result = 0;
+	cin >> n >> k;
+
+	result = bfs(n, k);
+
+	cout << result;
+
+	return 0;
+}
